@@ -1,0 +1,6 @@
+# Description
+
+This example adds Gnome and Chrome Remote Desktop to the predefined code-oss image.
+
+The first time you launch a new workstation based on this example, use the Code OSS terminal or SSH to [initialize Chrome Remote Desktop on the command line](https://remotedesktop.google.com/headless). After first-time initialization, the next time you start the same workstation, Chrome Remote Desktop should start automatically.
+
