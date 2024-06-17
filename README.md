@@ -1,16 +1,8 @@
 # Cloud Workstations Examples
 
-This repo contains examples for creating images for Cloud Workstations.
+This repo contains examples for creating images for Cloud Workstations:
+
+- [**gnome-crd**](examples/gnome-crd): This example adds Gnome and Chrome Remote Desktop to the predefined code-oss image.
 
 *These examples are not officially supported Google products.*
-
-## Instructions
-
-Use your tool of choice to build an image from the files in one of the
-example subdirectories, such as:
-
-```
-cd examples/gnome-crd
-gcloud builds submit -t [ARTIFACT REGISTRY TAG GOES HERE]
-```
 
