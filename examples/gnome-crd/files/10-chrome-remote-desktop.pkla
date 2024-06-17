@@ -1,0 +1,7 @@
+[Suppress authn required dialogs for improved UX]
+Identity=unix-group:chrome-remote-desktop
+Action=org.freedesktop.color-manager.*;org.freedesktop.packagekit.system-sources-refresh
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
+

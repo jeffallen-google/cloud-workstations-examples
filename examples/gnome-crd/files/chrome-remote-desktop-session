@@ -1,0 +1,8 @@
+echo "PULSE_CONFIG_PATH: $PULSE_CONFIG_PATH"
+echo "PULSE_RUNTIME_PATH: $PULSE_RUNTIME_PATH"
+echo "PULSE_STATE_PATH: $PULSE_STATE_PATH"
+echo "PULSE_SINK: $PULSE_SINK"
+pulseaudio -v --start --log-target=journal --disallow-exit --exit-idle-time=-1
+
+exec /etc/X11/Xsession /usr/bin/gnome-session
+
