@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# default cloud workstations image
 FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:latest
 
 # apply update
@@ -20,9 +19,6 @@ RUN apt-get update && apt-get upgrade -y
 
 # install minimal desktop with dependencies, then disable 1st time wizard and ubuntu update popups
 RUN apt-get install -y gnome-software gnome-software-common gnome-software-plugin-snap libappstream-glib8 libgd3 colord gnome-control-center gvfs-backends hplip libgphoto2-6 libsane sane-utils ubuntu-desktop-minimal && \
-#  apt-get remove -y gnome-initial-setup && \
-#  apt-get install -y libgd3 && \
-#  apt-get install -y colord gnome-control-center gvfs-backends hplip libgphoto2-6 libsane sane-utils ubuntu-desktop-minimal && \
   apt-get remove -y gnome-initial-setup && \
   chmod -x /usr/lib/ubuntu-release-upgrader/check-new-release-gtk
 
