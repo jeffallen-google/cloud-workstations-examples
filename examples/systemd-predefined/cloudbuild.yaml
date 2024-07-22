@@ -1,0 +1,9 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  script: |
+    docker build -t $_TAG --build-arg "BASE=$_BASE" .
+images:
+  - $_TAG
+options:
+  automapSubstitutions: true
+
