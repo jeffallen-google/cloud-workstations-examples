@@ -1,0 +1,11 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  script: |
+    docker build -t $_TAG --build-arg "BASE=$_BASE" .
+images:
+  - $_TAG
+options:
+  automapSubstitutions: true
+substitutions:
+  _BASE: us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:latest
+
