@@ -1,4 +1,4 @@
-# Copyright 2024 Google Inc. All Rights Reserved.
+# Copyright 2022 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,22 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASE
-FROM ${BASE}
+[Unit]
+Description=Workstation Environment Service
 
-# patch wrapdocker to run dockerd directly
-RUN sed -i 's/\(^service docker start.*\)/#\1\n\/usr\/bin\/dockerd $DOCKER_OPTS /'  /google/scripts/wrapdocker/wrapdocker
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/workstation-environment
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      systemd \
-      && \
-    apt-get clean && \
-    rm -rf /apt-keys && \
-    rm -rf /var/lib/apt/lists/*
-
-# Merge in files from the assets directory
-COPY ./assets/. /
-
-ENTRYPOINT ["/usr/bin/workstation-init"]
+[Install]
+WantedBy=multi-user.target
 

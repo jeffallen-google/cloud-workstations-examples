@@ -1,4 +1,6 @@
-# Copyright 2022 Google Inc. All Rights Reserved.
+#!/bin/bash
+#
+# Copyright 2024 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,14 +13,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Startup script to configure docker inside workstation container.
+#
 
-[Unit]
-Description=Workstation Entrypoint Service
+EXCLUDE='HOME|HOSTNAME|GOOGLE_CLOUD_WORKSTATIONS|PATH|DEBIAN_FRONTEND|PWD'
+OUTPUT=/etc/workstation.env
 
-[Service]
-PassEnvironment=DOCKER_OPTS CLOUD_WORKSTATIONS_ENABLE_METADATA_CREDS_CHECK WEB_HOST
-ExecStart=/google/scripts/entrypoint.sh
-
-[Install]
-WantedBy=multi-user.target
+</proc/1/environ \
+  tr '\0' '\n' | \
+  grep -vP "^($EXCLUDE)=" | \
+  tr '\n' '\0' | \
+  xargs -0 bash -c 'printf "export %q\n" "$@"' -- \
+  >$OUTPUT
 

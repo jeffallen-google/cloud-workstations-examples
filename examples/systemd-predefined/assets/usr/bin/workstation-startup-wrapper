@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Copyright 2024 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASE
-FROM ${BASE}
+# non systemd workstations have environment available to startup scripts
+# source env to maintain behavior under systemd
+echo "Sourcing environment"
+ENV_FILE=/etc/workstation.env
+[ -f "$ENV_FILE" ] && . "$ENV_FILE"
 
-# patch wrapdocker to run dockerd directly
-RUN sed -i 's/\(^service docker start.*\)/#\1\n\/usr\/bin\/dockerd $DOCKER_OPTS /'  /google/scripts/wrapdocker/wrapdocker
+echo "Starting Workstation"
+/usr/bin/workstation-startup
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      systemd \
-      && \
-    apt-get clean && \
-    rm -rf /apt-keys && \
-    rm -rf /var/lib/apt/lists/*
+echo "Signalling systemd READY"
+systemd-notify --ready
 
-# Merge in files from the assets directory
-COPY ./assets/. /
-
-ENTRYPOINT ["/usr/bin/workstation-init"]
+echo "Startup complete"
+runuser user -c "sleep infinity" # borrowed from original /google/scripts/entrypoint.sh
 
