@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:latest
+FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:last-ubuntu2204
 
 # apply update
 RUN apt-get update && apt-get upgrade -y
