@@ -16,8 +16,8 @@ ARG BASE
 FROM ${BASE}
 
 # patch docker scripts to run dockerd directly
-RUN sed -i 's/\(^service docker start.*\)/#\1\n\/usr\/bin\/dockerd $DOCKER_OPTS /' /google/scripts/wrapdocker/wrapdocker && \
-  sed -i 's/\(^\s*\)\(sudo service docker restart\)/\1#\2\n\1DOCKERD_PID=$(\/usr\/bin\/dockerd) \&\& sudo kill $DOCKERD_PID\n\1sudo \/usr\/bin\/dockerd $DOCKER_OPTS /' /etc/workstation-startup.d/000_configure-docker.sh
+RUN sed -i 's/\(^service docker start.*\)/#\1\n\/usr\/bin\/dockerd $DOCKER_OPTS/' /google/scripts/wrapdocker/wrapdocker && \
+  sed -i '/^.*wrapdocker.*$/{H;d;}; /service docker restart/{d}; ${G;}' /etc/workstation-startup.d/000_configure-docker.sh
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
